@@ -25,9 +25,11 @@ ca42849848e3   postgres:14   "docker-entrypoint.s…"   17 seconds ago   Up 16 s
 
 4 . ## Entrar desde el terminal
 
+Acuerdate de checkear el paso 3 para ver como se llama
 ```
 docker exec -it mi-postgres psql -U postgres -W
-
+ ó 
+docker exec -it server-mi-postgres-1 psql -U ricardo -W campaign
 ```
 
 CREATE DATABASE campana;

@@ -4,9 +4,9 @@ import Image from 'next/image'
 import Select from 'react-select';
 
 const options = [
-    { value: 'No Censado', label: 'No Censado' },
-    { value: 'Fuera de Censo', label: 'Fuera de Censo' },
-    { value: 'Nombre mal Escrito', label: 'Nombre mal Escrito' }
+    { value: 'NC', label: 'No Censado' },
+    { value: 'FC', label: 'Fuera de Censo' },
+    { value: 'NME', label: 'Nombre mal Escrito' }
 ];
 
 
@@ -98,6 +98,7 @@ const Firma = () => {
     	validSignature,
     	verifiedSignature,
     	selectedOption,
+	    D
 	originType,
     };
      console.log(formData)
@@ -190,6 +191,7 @@ const Firma = () => {
 	    			type="text" 
 	    			value={originType} onChange={handleOriginTypeChange}
 	    		/>
+	    
                     </div>
                     <button className='w-full my-5 py-2 bg-teal-500 shadow-lg  hover:bg-teal-400 text-white font-semibold rounded-lg' type="submit">
 	    		Ingresar
