@@ -2,8 +2,11 @@ import React, { useState , useId } from 'react'
 import buildingImg from '@/assets/building.jpg'
 import Image from 'next/image'
 import { useRouter } from 'next/router';
+//REACT SELECT
 import Select from 'react-select';
-
+//TOASTIFY
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const options = [
     { value: 'NC', label: 'No Censado' },
@@ -13,38 +16,9 @@ const options = [
 
 
 
-/*const customStyles = {
-    control: (provided) => ({
-        ...provided,
-        backgroundColor: 'gray'
-    }),
-    menu: (provided) => ({
-        ...provided,
-        backgroundColor: 'gray'
-    }),
-    option: (provided, state) => ({
-        ...provided,
-        backgroundColor: state.isSelected ? 'black' : 'gray',
-        color: state.isSelected ? 'white' : 'inherit',
-        boxShadow: 'none',
-        '&:hover': {
-            backgroundColor: state.isSelected ? 'black' : 'lightgray',
-            color: state.isSelected ? 'white' : 'inherit',
-            boxShadow: 'none'
-        }
-    }),
-    singleValue: (provided) => ({
-        ...provided,
-        color: 'white'
-    }),
-    input: (provided) => ({
-	D
-        ...provided,
-        color: 'white'
-    })
-};*/
 
 function Firma() {
+	
     const [name, setName] = useState("")	
     const [cc, setCc] = useState("")
     const [selectedOption, setSelectedOption] = useState(""); //or Null? 
@@ -61,11 +35,22 @@ function Firma() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
             })
-            window.location = "/" // Reload the page
+            //window.location = "/" // Reload the page
             console.log("response:", response)
-            //router.push('/');
+            
+	    if (response.status === 200) {
+                toast.success('Successfully Saved', { position: toast.POSITION.TOP_RIGHT })
+            }
+	    if (response.status !== 200) {
+               toast.error('Something went wrong', { position: toast.POSITION.TOP_RIGHT, autoClose: false })
+    
+	    }
+
+
+	    //router.push('/');
         } catch (err) {
             console.error(err.message)
+	    toast.error('Something went wrong', { position: toast.POSITION.TOP_RIGHT, autoClose: false })
         }
     }
     
@@ -113,6 +98,7 @@ function Firma() {
                      Add
                  </button>
               </form>
+	     <ToastContainer />	
         </div>
       </div>
     )
