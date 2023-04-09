@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState , useId } from 'react'
 import buildingImg from '@/assets/building.jpg'
 import Image from 'next/image'
 import { useRouter } from 'next/router';
@@ -38,6 +38,7 @@ const options = [
         color: 'white'
     }),
     input: (provided) => ({
+	D
         ...provided,
         color: 'white'
     })
@@ -104,6 +105,7 @@ function Firma() {
 	                    onChange={selectedOption => setSelectedOption(selectedOption)}
                             classNamePrefix='react-select'
                             isSearchable // add this line
+	    		    instanceId={useId()}	
                         />
                    </div>
 		    	
