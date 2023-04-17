@@ -15,12 +15,12 @@ const options = [
 ];
 
 
-
-
 function Firma() {
 	
     const [name, setName] = useState("")	
     const [cc, setCc] = useState("")
+    const [vasignature,setVasignature] = useState("")
+    const [vesignature,setVesignature] = useState("")
     const [selectedOption, setSelectedOption] = useState(""); //or Null? 
     
 	
@@ -29,7 +29,13 @@ function Firma() {
     const onSubmitForm = async (e) => {
         e.preventDefault()
         try {
-            const body = { name: name, cc:cc , problem_type: selectedOption.value  }
+            const body = { 
+		           name: name, 
+		           cc:cc , 
+		           valid_signature: vasignature ,
+		           verified_signature: vesignature , 
+		           problem_type: selectedOption.value  
+	                 }
             const response = await fetch("http://localhost:5002/api/one", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -69,6 +75,24 @@ function Firma() {
 	    		   type="text"
 	    		   value={cc} 
 	                   onChange={ e => setCc(e.target.value) }
+	    		/>
+                 </div>
+	         <div className='flex flex-col text-gray-400 py-2'>
+                    <label>Validación De Firma</label>
+                        <input 
+	    		   className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none' 
+	    		   type="text"
+	    		   value={ vasignature }
+	                   onChange={ e => setVasignature(e.target.value) }
+	    		/>
+                 </div>
+	         <div className='flex flex-col text-gray-400 py-2'>
+                    <label>Verificación De Firma</label>
+                        <input 
+	    		   className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none' 
+	    		   type="text"
+	    		   value={vesignature} 
+	                   onChange={ e => setVesignature(e.target.value) }
 	    		/>
                  </div>
 	         <div className='flex flex-col text-gray-400 py-2'>

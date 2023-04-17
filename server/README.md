@@ -2,6 +2,8 @@
 
 ## Inicializar Docker
 
+Primero Inicializa docker desktop
+
 $ docker compose up -- Dentro de la carpeta donde está el docker-compose.yml
 
 ## Como conectarme a la BD creada en Docker y Postgres
@@ -16,6 +18,14 @@ postgres=# \l
 ---------------------+---------+----------+------------+------------+------------+-----------------+---------------------
  campaign            | ricardo | UTF8     | en_US.utf8 | en_US.utf8 |            | libc            |
  musical_ethnography | ricardo | UTF8     | en_US.utf8 | en_US.utf8 |            | libc            |
+
+
+# Run The Server
+
+$  npm run start
+
+
+# Verifica que este funcionando con Insomnia
 
 
 
