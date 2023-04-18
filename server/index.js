@@ -8,10 +8,13 @@ const port = 5002;
 const Pool = require('pg').Pool;
 const { Client } = require('pg');
 
+//const iphost = '192.168.1.12' // PRADOS
+
+const iphost = '192.168.20.23' // CASA
+
 const pool = new Pool({
     user: 'ricardo',
-    //host: '192.168.0.17',
-    host: '192.168.20.23',
+    host:  iphost, 
     database: 'campaign',
     password: '1234',
     port: 5432,
@@ -26,7 +29,7 @@ app.use(express.json());
 // Check connection to database
 const client = new Client({
     user: 'ricardo',
-    host: '192.168.20.23',
+    host: iphost,
     database: 'campaign',
     password: '1234',
     port: 5432,

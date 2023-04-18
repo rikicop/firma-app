@@ -19,11 +19,17 @@ function Firma() {
 	
     const [name, setName] = useState("")	
     const [cc, setCc] = useState("")
-    const [vasignature,setVasignature] = useState("")
-    const [vesignature,setVesignature] = useState("")
+    //const [shortv,setShortv] = useState(false)	
+    const [vasignature,setVasignature] = useState("-")
+    const [vesignature,setVesignature] = useState("-")
     const [selectedOption, setSelectedOption] = useState(""); //or Null? 
     
-	
+    // Cambiar estado de shortv
+    
+    function handleVer() {
+       setVasignature("V");	        
+       setVesignature("FV"); 	
+    }
     const router = useRouter();
 
     const onSubmitForm = async (e) => {
@@ -56,7 +62,7 @@ function Firma() {
 	    //router.push('/');
         } catch (err) {
             console.error(err.message)
-	    toast.error('Something went wrong', { position: toast.POSITION.TOP_RIGHT, autoClose: false })
+	    toast.error('Something went wrong in catch!', { position: toast.POSITION.TOP_RIGHT, autoClose: false })
         }
     }
     
@@ -67,7 +73,7 @@ function Firma() {
           </div>
           <div className='bg-gray-800 flex flex-col justify-center'>
                 <h2 className='text-4xl dark:text-white font-bold text-center mb-2'>Ingreso de Firmas</h2>
-                <form className='max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg' onSubmit={onSubmitForm}>
+                <div className='max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg'>
                 <div className='flex flex-col text-gray-400 py-2'>
                     <label>CC</label>
                         <input 
@@ -77,6 +83,12 @@ function Firma() {
 	                   onChange={ e => setCc(e.target.value) }
 	    		/>
                  </div>
+	         <div className='flex flex-col text-gray-400 py-2'>
+                        <button onClick={handleVer} style={{ backgroundColor: "red", color: "white" }}>
+	                  V
+	                </button>
+                 </div>
+
 	         <div className='flex flex-col text-gray-400 py-2'>
                     <label>Validación De Firma</label>
                         <input 
@@ -96,7 +108,7 @@ function Firma() {
 	    		/>
                  </div>
 	         <div className='flex flex-col text-gray-400 py-2'>
-                     <label>Name</label>
+                     <label>Nombre </label>
                        <input 
 	    		  className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none' 
 	    		  type="text"
@@ -106,7 +118,7 @@ function Firma() {
                  </div>
 
 	         <div className='flex flex-col text-gray-400 py-2'>
-                        <label htmlFor="problema">PROBLEMA</label>
+                        <label htmlFor="problema">Problema</label>
                          <Select
                             id="problema"
                             options={options}
@@ -118,10 +130,10 @@ function Firma() {
                         />
                    </div>
 		    	
-                 <button className="bg-green-500 text-white ml-1 py-2 px-3 rounded">
+                 <button className="bg-green-500 text-white ml-1 py-2 px-3 rounded" onClick={onSubmitForm}>
                      Add
                  </button>
-              </form>
+              </div>
 	     <ToastContainer />	
         </div>
       </div>
