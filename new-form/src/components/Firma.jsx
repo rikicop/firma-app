@@ -11,7 +11,23 @@ import 'react-toastify/dist/ReactToastify.css';
 const options = [
     { value: 'NC', label: 'No Censado' },
     { value: 'FC', label: 'Fuera de Censo' },
-    { value: 'NME', label: 'Nombre mal Escrito' }
+    { value: 'NME', label: 'Nombre mal Escrito' },
+    { value: 'U', label: 'Uniprocedencia' },  
+    { value: 'NME', label: 'Nombre Mal Escrito' },  
+    { value: 'CPM', label: 'Cancelada por Muerte' },  
+    { value: 'SDP', label: 'Suspención de Derechos P.' },  
+    { value: 'MPH', label: 'Mal procedimiento por huella' },  
+    { value: 'ND', label: 'Nombre Diferente por Huella' },   
+    { value: 'SF', label: 'Firma Sobrepuesta' },  
+    { value: 'CI', label: 'Casilla Intercalda' },  
+    { value: 'NI', label: 'Número Ilegible' },  
+    { value: 'NNC', label: 'Número no correspondiente' },  
+    { value: 'NHPV', label: 'No Habilitada para Votar' },  
+    { value: 'HDPT', label: 'Hoja Dañada por tachón' },
+    { value: 'NI', label: 'Nombre Incompleto o Inválido' },  
+    { value: 'D', label: 'Duplicado' },  
+    { value: 'ID', label: 'Datos Incompletos'},  
+    { value: 'FI', label: 'Firma Inválida'},  
 ];
 
 
@@ -25,11 +41,49 @@ function Firma() {
     const [selectedOption, setSelectedOption] = useState(""); //or Null? 
     
     // Cambiar estado de shortv
-    
-    function handleVer() {
+    function handleVV() {
+       setVasignature("NV");	        
+       setVesignature("NV"); 	
+    }	
+    function handleNV() {
+       setVasignature("NV");	        
+       setVesignature("FV"); 	
+    }
+    function handlePerfect() {
        setVasignature("V");	        
        setVesignature("FV"); 	
     }
+    const handleSelectChange = (selectedOption) => {
+        setSelectedOption(selectedOption);
+	//if(selectedOption.value === "FC"){
+        //   setVasignature("NV");	        
+        //   setVesignature("FV"); 
+	//}
+	if(selectedOption.value === "FC" || selectedOption.value === "NC" 
+         || selectedOption.value === "CPM" ||         
+            selectedOption.value === "SDP" || 
+            selectedOption.value === "ND" || 
+            selectedOption.value === "NHPV" || 
+            selectedOption.value === "NMC")
+        {
+           setVasignature("NV");	        
+           setVesignature("FV"); 
+	}
+        if(selectedOption.value === "EE" || selectedOption.value === "NL" || 
+         selectedOption.value === "U" || selectedOption.value === "NME" ||
+         selectedOption.value === "SF" || selectedOption.value === "CI" ||
+         selectedOption.value === "MPH" || selectedOption.value === "HDPT" ||
+         selectedOption.value === "D" || selectedOption.value === "ID" ||
+         selectedOption.value === "FI")
+        {	
+	   setVasignature("NV");	        
+           setVesignature("NV"); 
+        }  
+	    
+    };
+
+
+    
     const router = useRouter();
 
     const onSubmitForm = async (e) => {
@@ -42,7 +96,7 @@ function Firma() {
 		           verified_signature: vesignature , 
 		           problem_type: selectedOption.value  
 	                 }
-            const response = await fetch("http://localhost:5002/api/one", {
+            const response = await fetch("http://192.168.1.12:5002/api/one", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
@@ -83,12 +137,36 @@ function Firma() {
 	                   onChange={ e => setCc(e.target.value) }
 	    		/>
                  </div>
+	         {/*
 	         <div className='flex flex-col text-gray-400 py-2'>
-                        <button onClick={handleVer} style={{ backgroundColor: "red", color: "white" }}>
-	                  V
+                        <button onClick={handleVV} style={{ backgroundColor: "tomato", color: "white" }}>
+	                  No Pasan Verificación Visual (NV | NV)
 	                </button>
                  </div>
+	         <div className='flex flex-col text-gray-400 py-2'>
+                        <button onClick={handleNV} style={{ backgroundColor: "red", color: "white" }}>
+	                  No Pasan Verificación Del Sistema (NV | FV)
+	                </button>
+                 </div>
+		 */}
+	          <div className='flex flex-col text-gray-400 py-2'>
+                        <label htmlFor="problema">Problema</label>
+                         <Select
+                            id="problema"
+                            options={options}
+                            value={selectedOption}
+	                    onChange={handleSelectChange}
+                            classNamePrefix='react-select'
+                            isSearchable // add this line
+	    		    instanceId={useId()}	
+                        />
+                   </div>
 
+	          <div className='flex flex-col text-gray-400 py-2'>
+                        <button onClick={handlePerfect} style={{ backgroundColor: "green", color: "white" }}>
+	                 Perfecto! 
+	                </button>
+                 </div>
 	         <div className='flex flex-col text-gray-400 py-2'>
                     <label>Validación De Firma</label>
                         <input 
@@ -117,19 +195,7 @@ function Firma() {
 	    	      />
                  </div>
 
-	         <div className='flex flex-col text-gray-400 py-2'>
-                        <label htmlFor="problema">Problema</label>
-                         <Select
-                            id="problema"
-                            options={options}
-                            value={selectedOption}
-	                    onChange={selectedOption => setSelectedOption(selectedOption)}
-                            classNamePrefix='react-select'
-                            isSearchable // add this line
-	    		    instanceId={useId()}	
-                        />
-                   </div>
-		    	
+	         		    	
                  <button className="bg-green-500 text-white ml-1 py-2 px-3 rounded" onClick={onSubmitForm}>
                      Add
                  </button>

@@ -8,9 +8,9 @@ const port = 5002;
 const Pool = require('pg').Pool;
 const { Client } = require('pg');
 
-//const iphost = '192.168.1.12' // PRADOS
+const iphost = '192.168.1.12' // PRADOS
 
-const iphost = '192.168.20.23' // CASA
+//const iphost = '192.168.20.23' // CASA
 
 const pool = new Pool({
     user: 'ricardo',
