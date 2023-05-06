@@ -7,11 +7,12 @@ import Select from 'react-select';
 //TOASTIFY
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+// Download CSV
+import Link from 'next/link';
 
 const options = [
     { value: 'NC', label: 'No Censado' },
     { value: 'FC', label: 'Fuera de Censo' },
-    { value: 'NME', label: 'Nombre mal Escrito' },
     { value: 'U', label: 'Uniprocedencia' },  
     { value: 'NME', label: 'Nombre Mal Escrito' },  
     { value: 'CPM', label: 'Cancelada por Muerte' },  
@@ -51,7 +52,8 @@ function Firma() {
     }
     function handlePerfect() {
        setVasignature("V");	        
-       setVesignature("FV"); 	
+       setVesignature("FV");
+       setSelectedOption("");
     }
     const handleSelectChange = (selectedOption) => {
         setSelectedOption(selectedOption);
@@ -105,14 +107,18 @@ function Firma() {
             console.log("response:", response)
             
 	    if (response.status === 200) {
-                toast.success('Successfully Saved', { position: toast.POSITION.TOP_RIGHT })
+                toast.success(`Successfully Saved ${name}`, { position: toast.POSITION.TOP_RIGHT, autoClose:2000 })
             }
 	    if (response.status !== 200) {
                toast.error('Something went wrong', { position: toast.POSITION.TOP_RIGHT, autoClose: false })
     
 	    }
-
-
+            setName("");
+	    setCc("");
+	    setVasignature("-")
+	    setVesignature("-")
+            setSelectedOption("")		
+ 
 	    //router.push('/');
         } catch (err) {
             console.error(err.message)
@@ -137,7 +143,17 @@ function Firma() {
 	                   onChange={ e => setCc(e.target.value) }
 	    		/>
                  </div>
-	         {/*
+	         <div className='flex flex-col text-gray-400 py-2'>
+                     <label>Nombre </label>
+                       <input 
+	    		  className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none' 
+	    		  type="text"
+	    		  value={name} 
+	                  onChange={ e => setName(e.target.value) }
+	    	      />
+                 </div>
+
+{/*
 	         <div className='flex flex-col text-gray-400 py-2'>
                         <button onClick={handleVV} style={{ backgroundColor: "tomato", color: "white" }}>
 	                  No Pasan Verificación Visual (NV | NV)
@@ -185,20 +201,15 @@ function Firma() {
 	                   onChange={ e => setVesignature(e.target.value) }
 	    		/>
                  </div>
-	         <div className='flex flex-col text-gray-400 py-2'>
-                     <label>Nombre </label>
-                       <input 
-	    		  className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none' 
-	    		  type="text"
-	    		  value={name} 
-	                  onChange={ e => setName(e.target.value) }
-	    	      />
-                 </div>
-
-	         		    	
+	         	         		    	
                  <button className="bg-green-500 text-white ml-1 py-2 px-3 rounded" onClick={onSubmitForm}>
                      Add
                  </button>
+		<Link href="http://192.168.1.12:5002/api/download">        		
+	        	<div className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mt-2 px-4 ml-2 inline-block rounded">
+	                 Descargar CSV
+	                </div>
+      		</Link>
               </div>
 	     <ToastContainer />	
         </div>

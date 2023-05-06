@@ -1,0 +1,23 @@
+{
+  "name": "firma-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run start --prefix server\" \"npm run dev --prefix new-form\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rikicop/firma-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rikicop/firma-app/issues"
+  },
+  "homepage": "https://github.com/rikicop/firma-app#readme",
+  "devDependencies": {
+    "concurrently": "^8.0.1"
+  }
+}
